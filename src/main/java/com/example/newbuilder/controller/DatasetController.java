@@ -2,6 +2,9 @@ package com.example.newbuilder.controller;
 
 import com.example.newbuilder.entity.Dataset;
 import com.example.newbuilder.service.DatasetService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,18 @@ public class DatasetController {
 
     @PostMapping
     public Dataset createDataset(@RequestBody Dataset dataset) {
+        System.out.println("----------------------------------");
+        ObjectMapper ompr= new ObjectMapper();
+        try {
+            String out  = ompr.writeValueAsString(dataset);
+            System.out.println(out);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }//.orElseThrow( new JsonProcessingException("issue with conversoin"));
+        System.out.println("----------------------------------");
+        
+        System.out.println(dataset);
         System.out.println("Data set controller"+dataset.toString());
         return service.createDataset(dataset);
     }
