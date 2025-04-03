@@ -1,5 +1,7 @@
 package com.example.newbuilder.controller;
 
+import com.example.newbuilder.DTO.DataSetRequest;
+import com.example.newbuilder.DTO.DataSetResponse;
 import com.example.newbuilder.entity.Dataset;
 import com.example.newbuilder.service.DatasetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,20 +18,20 @@ public class DatasetController {
     private DatasetService service;
 
     @PostMapping
-    public Dataset createDataset(@RequestBody Dataset dataset) {
-        System.out.println("----------------------------------");
-        ObjectMapper ompr= new ObjectMapper();
-        try {
-            String out  = ompr.writeValueAsString(dataset);
-            System.out.println(out);
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }//.orElseThrow( new JsonProcessingException("issue with conversoin"));
-        System.out.println("----------------------------------");
+    public DataSetResponse createDataset(@RequestBody DataSetRequest dataset) {
+        // System.out.println("----------------------------------");
+        // ObjectMapper ompr= new ObjectMapper();
+        // try {
+        //     String out  = ompr.writeValueAsString(dataset);
+        //     System.out.println(out);
+        // } catch (JsonProcessingException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }//.orElseThrow( new JsonProcessingException("issue with conversoin"));
+        // System.out.println("----------------------------------");
         
         System.out.println(dataset);
-        System.out.println("Data set controller"+dataset.toString());
+        // System.out.println("Data set controller"+dataset.toString());
         return service.createDataset(dataset);
     }
 
