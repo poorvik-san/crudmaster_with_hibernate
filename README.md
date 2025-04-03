@@ -127,3 +127,9 @@ The reformated structure
 There is a issue where we were not able to send data without adding a trailing""" \" """ in the data structure .
 but when we changed the data type from String to MAP<String ,Object > the issue got fixed. 
 ```
+
+```
+@maju -->fix 2
+
+This fix addressed the issue with the auto genearion and the seperation of payload for request and repond schema.
+```
