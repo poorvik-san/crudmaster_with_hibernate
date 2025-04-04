@@ -23,31 +23,52 @@ import lombok.ToString;
 @ToString
 @Table(name = "datasets")
 public class Dataset {
-    @Id
+    @Column(name = "id")
     private String id;
-    //@Column(name = "dataset_id")  
+    // do not change the variable name from dataset_id to datasetId as this is the expected camal case for reposotory
+    // JPA expects in camel case if we give snake case it will not work.................
+    //@Column(name = "dataset_id")
+    @Column(name = "dataset_id", unique = true, nullable = false)
+    // @Column(name = "dataset_id", unique = true, nullable = false)
+    @Id  
     private String datasetId;
     
 
+    // public String getDataset_id() {
+    //     return dataset_id;
+    // }
+    // public void setDataset_id(String dataset_id) {
+    //     this.dataset_id = dataset_id;
+    // }
+    @Column(name = "type")
     private String type;
+    @Column(name = "name")
     private String name;
+    @Column(name = "status")
     private String status;
+    @Column(name = "tags", columnDefinition = "text[]")
     private String[] tags;
-    private int data_version;
-    private String created_by;
-    private String updated_by;
+    @Column(name = "data_version")
+    private int dataVersion;
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private String updatedBy;
     
 
     
     // private DateTimeFormatter created_date;
+    @Column(name = "created_date")
     @JdbcTypeCode(SqlTypes.LOCAL_DATE_TIME)
-    private LocalDateTime created_date;
+    private LocalDateTime createdDate;
 
+    @Column(name = "updated_date")
     @JdbcTypeCode(SqlTypes.LOCAL_DATE)
-    private LocalDate updated_date;
+    private LocalDate updatedDate;
   
+    @Column(name = "published_date")
     @JdbcTypeCode(SqlTypes.LOCAL_DATE_TIME)
-    private LocalDateTime published_date;
+    private LocalDateTime publishedDate;
 
 
 
@@ -57,22 +78,22 @@ public class Dataset {
     private Map<String, Object> validationConfig; 
     @Column(name = "extraction_config", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> extraction_config;
+    private Map<String, Object> extractionConfig;
     @Column(name = "dedup_config", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> dedup_config;
+    private Map<String, Object> dedupConfig;
     @Column(name = "data_schema", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> data_schema;
+    private Map<String, Object> dataSchema;
     @Column(name = "denorm_config", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> denorm_config;
+    private Map<String, Object> denormConfig;
     @Column(name = "router_config", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> router_config;
+    private Map<String, Object> routerConfig;
     @Column(name = "dataset_config", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> dataset_config;
+    private Map<String, Object> datasetConfig;
     
 
   
