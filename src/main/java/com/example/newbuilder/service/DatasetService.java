@@ -8,11 +8,14 @@ import com.example.newbuilder.repository.DatasetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+//import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+//import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,7 +45,8 @@ public class DatasetService {
         dataset.setName(datasetRequest.getName());
         dataset.setStatus(datasetRequest.getStatus());
         dataset.setTags(datasetRequest.getTags());
-        dataset.setDataVersion(datasetRequest.getDataVersion());
+        //dataset.setDataVersion(datasetRequest.getDataVersion());
+        dataset.setDataVersion(1);
         dataset.setCreatedBy(datasetRequest.getCreatedBy());
         dataset.setUpdatedBy(datasetRequest.getUpdatedBy());
         dataset.setValidationConfig(datasetRequest.getValidationConfig());
@@ -72,8 +76,51 @@ public class DatasetService {
         return repository.findByDatasetId(datasetId).map(dataset -> {
             if (newData.getType() != null) dataset.setType(newData.getType());
             if (newData.getName() != null) dataset.setName(newData.getName());
+            if (newData.getStatus() != null) dataset.setStatus(newData.getStatus());
+            if (newData.getTags() != null) dataset.setTags(newData.getTags());
+            //if (newData.getDataVersion() != 0) dataset.setDataVersion(dataset.getDataVersion()+1);
+            dataset.setDataVersion(dataset.getDataVersion()+1);
+            if (newData.getCreatedBy() != null) dataset.setCreatedBy(newData.getCreatedBy());
+            if (newData.getUpdatedBy() != null) dataset.setUpdatedBy(newData.getUpdatedBy());
+            if (newData.getValidationConfig() != null) dataset.setValidationConfig(newData.getValidationConfig());
+            if (newData.getExtractionConfig() != null) dataset.setExtractionConfig(newData.getExtractionConfig());
+            if (newData.getDatasetConfig() != null) dataset.setDatasetConfig(newData.getDatasetConfig());
+            if (newData.getDataSchema() != null) dataset.setDataSchema(newData.getDataSchema());
+            if (newData.getDenormConfig() != null) dataset.setDenormConfig(newData.getDenormConfig());
+            if (newData.getRouterConfig() != null) dataset.setRouterConfig(newData.getRouterConfig());
+            if (newData.getDatasetConfig() != null) dataset.setDatasetConfig(newData.getDatasetConfig());
+            dataset.setUpdatedDate(LocalDateTime.now().toLocalDate());
             return repository.save(dataset);
         }).orElseThrow(() -> new DatasetNotFoundException("Dataset with ID " + datasetId + " not found"));
+    }
+
+    @Transactional
+    public Dataset updateDataset1(String datasetId, Dataset newData) {
+        Map<String, Object> nonNullFields = new HashMap<>();
+        Dataset dataset = repository.findByDatasetId(datasetId)
+                .orElseThrow(() -> new DatasetNotFoundException("Dataset with ID " + datasetId + " not found"));
+        // Use reflection to get all fields and their values
+
+        try {
+            Field[] fields = dataset.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true); // https://stackoverflow.com/questions/10638826/java-reflection-impact-of-setaccessibletrue
+                if (!field.getName().equals("datasetId")) { // Ignore aid field
+                    Object value = field.get(dataset);
+                    if (value != null) {
+                        nonNullFields.put(field.getName(), value);
+                    }
+                }
+            } 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        // Build the SQL query
+        if (nonNullFields.isEmpty()) {
+            //return "No fields to update"; // Return a message if no non-null fields exist
+        }
+        return new Dataset();    
     }
 
     public List<DataSetResponse> findAllDatasets() {
