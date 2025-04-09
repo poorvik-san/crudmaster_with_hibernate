@@ -244,4 +244,3 @@ These are the requests and responses for the simulation of RESTful API services 
 ```
 ```
 
-Let me know if you want this in a downloadable `.md` file or if you'd like to add more endpoints or sections!
