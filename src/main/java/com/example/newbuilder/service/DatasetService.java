@@ -23,7 +23,7 @@ public class DatasetService {
     @Autowired
     private DatasetRepository repository;
 
-    public DataSetResponse createDataset(DataSetRequest datasetRequest) {
+    public DataSetResponse2 createDataset(DataSetRequest datasetRequest) {
         // // System.out.println("--------------------------------------------");
         System.out.println(repository.findById(datasetRequest.getDatasetId()).isEmpty());
         // // System.out.println("--------------------------------------------");
@@ -61,9 +61,19 @@ public class DatasetService {
         dataset.setUpdatedDate(LocalDateTime.now().toLocalDate());
         dataset.setPublishedDate(LocalDateTime.now());
 
-        dataset = repository.save(dataset);
+        try {
+            dataset = repository.save(dataset) ;
+        }
+        catch(IllegalArgumentException e ){
+            System.out.println("IllegalArgumentException: " + e.getMessage());
+        }
+        catch(Exception e){
+            System.out.println("Exception: " + e.getMessage());
+        }
+        // System.out.println("Dataset created with ID: " + dataset.getDataset_id());
+       
 
-        return mapToResponse(dataset);
+        return mapToResponse2(dataset,"Dataset created successfully");
     }
 
     public Dataset getDatasetById(String id) {
@@ -94,34 +104,7 @@ public class DatasetService {
         }).orElseThrow(() -> new DatasetNotFoundException("Dataset with ID " + datasetId + " not found"));
     }
 
-    @Transactional
-    public Dataset updateDataset1(String datasetId, Dataset newData) {
-        Map<String, Object> nonNullFields = new HashMap<>();
-        Dataset dataset = repository.findByDatasetId(datasetId)
-                .orElseThrow(() -> new DatasetNotFoundException("Dataset with ID " + datasetId + " not found"));
-        // Use reflection to get all fields and their values
-
-        try {
-            Field[] fields = dataset.getClass().getDeclaredFields();
-            for (Field field : fields) {
-                field.setAccessible(true); // https://stackoverflow.com/questions/10638826/java-reflection-impact-of-setaccessibletrue
-                if (!field.getName().equals("datasetId")) { // Ignore aid field
-                    Object value = field.get(dataset);
-                    if (value != null) {
-                        nonNullFields.put(field.getName(), value);
-                    }
-                }
-            } 
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        // Build the SQL query
-        if (nonNullFields.isEmpty()) {
-            //return "No fields to update"; // Return a message if no non-null fields exist
-        }
-        return new Dataset();    
-    }
+    
 
     public List<DataSetResponse> findAllDatasets() {
         List<Dataset> datasets = repository.findAll();
@@ -129,11 +112,15 @@ public class DatasetService {
     }
 
     @Transactional
-    public void deleteDataset(String datasetId) {
+    public DataSetResponse2 deleteDataset(String datasetId) {
         if (!repository.existsById(datasetId)) {
             throw new DatasetNotFoundException("Dataset with ID " + datasetId + " not found for deletion");
         }
+        Dataset datasetv= getDatasetById( datasetId);
         repository.deleteByDatasetId(datasetId);
+        return mapToResponse2(datasetv,"Dataset deleted successfully");
+        
+        
     }
 
     private DataSetResponse mapToResponse(Dataset dataset) {
@@ -158,5 +145,17 @@ public class DatasetService {
         datasetResponse.setRouterConfig(dataset.getRouterConfig());
         datasetResponse.setDatasetConfig(dataset.getDatasetConfig());
         return datasetResponse;
+    }
+    private DataSetResponse2 mapToResponse2(Dataset dataset,String message) {
+        DataSetResponse2 datasetResponse2 = new DataSetResponse2();
+        datasetResponse2.setId(dataset.getId());
+        datasetResponse2.setDatasetId(dataset.getDatasetId());
+        datasetResponse2.setType(dataset.getType());
+        datasetResponse2.setDataVersion(dataset.getDataVersion());
+        datasetResponse2.setMessage(message);
+        datasetResponse2.setVer("v1");
+
+        
+        return datasetResponse2;
     }
 }

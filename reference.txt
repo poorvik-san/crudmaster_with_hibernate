@@ -14,3 +14,86 @@
     "version_key": "1721049248930"
   }
 }
+
+
+POST /v2/datasets/create HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+Accept: */*
+Content-Length: 1086
+
+{
+  "id": "api.datasets.create",
+  "ver": "v2",
+  "ts": "2024-04-10T16:10:50+05:30",
+  "params": {
+    "msgid": "4a7f14c3-d61e-4d4f-be78-181834eeff6d"
+  },
+  "request": {
+    "dataset_id": "telemetry_record-t4",
+    "type": "event",
+    "name": "sb-telemetry",
+    "validation_config": {
+      "validate": true,
+      "mode": "Strict"
+    },
+    "extraction_config": {
+      "is_batch_event": true,
+      "extraction_key": "events",
+      "dedup_config": {
+        "drop_duplicates": true,
+        "dedup_key": "id"
+      }
+    },
+    "dedup_config": {
+      "drop_duplicates": true,
+      "dedup_key": "mid"
+    },
+    "data_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "mid": {
+          "type": "string",
+          "arrival_format": "text",
+          "data_type": "string"
+        },
+        "ets": {
+          "type": "integer",
+          "arrival_format": "number",
+          "data_type": "epoch"
+        },
+        "eid": {
+          "type": "string",
+          "arrival_format": "text",
+          "data_type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "denorm_config": {
+      "denorm_fields": [
+        {
+          "denorm_key": "eid",
+          "denorm_out_field": "userdata",
+          "dataset_id": "master-telemetry"
+        }
+      ]
+    },
+    "transformations_config": [
+      {
+        "field_key": "email",
+        "transformation_function": {
+          "type": "mask",
+          "expr": "mid",
+          "datatype": "string",
+          "category": "pii"
+        },
+        "mode": "Strict"
+      }
+    ],
+    "tags": [
+      "tag1"
+    ]
+  }
+}
