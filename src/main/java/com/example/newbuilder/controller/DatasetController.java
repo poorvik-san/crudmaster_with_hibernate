@@ -1,5 +1,5 @@
 package com.example.newbuilder.controller;
-import com.example.newbuilder.DTO.ApiResponse;
+//import com.example.newbuilder.DTO.ApiResponse;
 import com.example.newbuilder.DTO.ApiResponse2;
 import com.example.newbuilder.DTO.DataSetRequest;
 import com.example.newbuilder.DTO.DataSetResponse;
@@ -20,10 +20,6 @@ public class DatasetController {
     public ResponseEntity<ApiResponse2<DataSetResponse2>> createDataset(@RequestBody DataSetRequest dataset) {
         System.out.println(dataset.getDatasetId());
         DataSetResponse2 response = service.createDataset(dataset);
-        
-        //String validate_id=response.getDataset_id();
-        // return ResponseEntity.status(HttpStatus.CREATED)
-        //         .body(ApiResponse.success("api.datasets.create", response, HttpStatus.CREATED));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse2.success("api.datasets.create", response, HttpStatus.CREATED,response.getId()));
     }
