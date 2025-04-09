@@ -1,519 +1,242 @@
-## The new changes ...
 
+These are the requests and responses for the simulation of RESTful API services using Spring Boot.
 
-### POST request.
+---
 
-``` JSON
+### **POST**  
+**URL:** `http://127.0.0.1:8080/v1/dataset/create`  
+
+**Request:**
+```json
 {
-    
-    "datasetId": "111",
-    "type": "dataset",
-    "name": "observations-transformed",
-    "validationConfig": {
-        "validate": true,
-        "mode": "Strict",
-        "validation_mode": "Strict"
+  "datasetId": "666",
+  "type": "dsfdsffsaf",
+  "name": "observations-transformed",
+  "validationConfig": {
+    "validate": true,
+    "mode": "Strict",
+    "validation_mode": "Strict"
+  },
+  "extractionConfig": {
+    "is_batch_event": true,
+    "extraction_key": "events",
+    "dedup_config": {
+      "drop_duplicates": true,
+      "dedup_key": "id",
+      "dedup_period": 720
     },
-    "extractionConfig": {
-        "is_batch_event": true,
-        "extraction_key": "events",
-        "dedup_config": {
-            "drop_duplicates": true,
-            "dedup_key": "id",
-            "dedup_period": 720
-        },
-        "batchId": "id"
-    },
-    "dedupConfig": {
-        "drop_duplicates": true,
-        "dedup_key": "id",
-        "dedup_period": 720
-    },
-    "dataSchema": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "title": "Canonical Observations",
-        "description": "A canonical observation",
-        "type": "object",
-        "properties": {
-            "obsCode": {
-                "type": "string"
-            },
-            "codeComponents": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "componentCode": {
-                            "type": "string"
-                        },
-                        "componentType": {
-                            "type": "string",
-                            "enum": [
-                                "AGG_TIME_WINDOW",
-                                "AGG_METHOD",
-                                "PARAMETER",
-                                "FEATURE_OF_INTEREST",
-                                "OBS_PROPERTY",
-                                "SAMPLING_STRATEGY",
-                                "OBS_METHOD",
-                                "METADATA",
-                                "METADATA_DEVICE",
-                                "DATA_QUALITY",
-                                "EVENT",
-                                "FOI_CONTEXT"
-                            ]
-                        },
-                        "selector": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "string"
-                        },
-                        "valueUoM": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-        }
-        truncated 
-    }
+    "batchId": "id"
+  }
 }
+```
 
-
-``` 
-
-
-###  post response response 
-
-```JSON
+**Successful Response:**
+```json
 {
-"id_path": "api.datasets.create",
-"ver": "v2",
-"ts": "2025-04-07T11:17:24.824034+05:30[Asia/Kolkata]",
-"params": {
+  "id": "api.datasets.create",
+  "ver": "v1",
+  "ts": "2025-04-09T11:20:49.992233",
+  "params": {
+    "msgid": "ef64f976-9142-41b1-ac70-97983aeaecba",
+    "resmsgid": "23d4df0e-9b99-4da3-97f5-5539e76bdc8e",
     "status": "SUCCESS"
-},
-"responseCode": "CREATED",
-"result": {
-    "id": "5199909c-19c1-485d-bfee-eb349d3d9cbc",
-    "datasetId": "111",
-    "type": "dataset",
-    "name": "observations-transformed",
-    "status": "Live",
-    "tags": [
-        "tag1",
-        "tag2"
-    ],
+  },
+  "responseCode": "OK",
+  "result": {
+    "id": "ef64f976-9142-41b1-ac70-97983aeaecba",
+    "datasetId": "666",
+    "type": "dsfdsffsaf",
     "dataVersion": 1,
-    "createdBy": "SYSTEM",
-    "updatedBy": "SYSTEM",
-    "createdDate": "2025-04-07T11:17:24.726909",
-    "updatedDate": "2025-04-07",
-    "publishedDate": "2025-04-07T11:17:24.726957",
-    "validationConfig": {
-        "validate": true,
-        "mode": "Strict",
-        "validation_mode": "Strict"
-    },
-    "extractionConfig": {
-        "is_batch_event": true,
-        "extraction_key": "events",
-        "dedup_config": {
-            "drop_duplicates": true,
-            "dedup_key": "id",
-            "dedup_period": 720
-        },
-        "batchId": "id"
-    },
-    "dedupConfig": {
-        "data_key": "",
-        "timestamp_key": "phenTime",
-        "exclude_fields": [],
-        "entry_topic": "local.ingest",
-        "redis_db_host": "192.168.106.2",
-        "redis_db_port": 6379,
-        "index_data": true,
-        "redis_db": 0
-    },
-    "dataSchema": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "title": "Canonical Observations",
-        "description": "A canonical observation",
-        "type": "object",
-        "properties": {
-            "obsCode": {
-                "type": "string"
-            },
-            "codeComponents": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "componentCode": {
-                            "type": "string"
-                        },
-                        "componentType": {
-                            "type": "string",
-                            "enum": [
-                                "AGG_TIME_WINDOW",
-                                "AGG_METHOD",
-                                "PARAMETER",
-                                "FEATURE_OF_INTEREST",
-                                "OBS_PROPERTY",
-                                "SAMPLING_STRATEGY",
-                                "OBS_METHOD",
-                                "METADATA",
-                                "METADATA_DEVICE",
-                                "DATA_QUALITY",
-                                "EVENT",
-                                "FOI_CONTEXT"
-                            ]
-                        },
-                        "selector": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "string"
-                        },
-                        "valueUoM": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-           
-
-```
-
-
-### when already exists data is pushed -->
-
-``` JSON
-{
-"id_path": "api.datasets.duplicate",
-"ver": "v2",
-"ts": "2025-04-07T11:20:45.310902+05:30[Asia/Kolkata]",
-"params": {
-    "status": "FAILED"
-},
-"responseCode": "CONFLICT",
-"result": "Dataset with ID 111 already exists"
+    "message": "Dataset created successfully",
+    "ver": "v1"
+  }
 }
 ```
 
-
-### Patch 
-    
-Api end point --> http://localhost:8080/v1/dataset/111
-
-request body -->
-``` JSON
+**If dataset already exists:**
+```json
 {
-"type": "jujust patching test",
-"name": "ss"
+  "id": "api.datasets.duplicate",
+  "ver": "v1",
+  "ts": "2025-04-09T11:21:27.367834",
+  "params": {
+    "status": "FAILED",
+    "resmsgid": "a26cf7f6-cdac-4a1a-894c-31be0d5f899f"
+  },
+  "responseCode": "OK",
+  "result": "Dataset with ID 666 already exists"
 }
 ```
 
-response 
-``` JSON
+**If required fields are missing:**
+```json
 {
-"id_path": "api.datasets.update",
-"ver": "v2",
-"ts": "2025-04-07T11:22:20.669936+05:30[Asia/Kolkata]",
-"params": {
+  "id": "api.datasets.error",
+  "ver": "v1",
+  "ts": "2025-04-09T11:22:24.289416",
+  "params": {
+    "status": "FAILED",
+    "resmsgid": "2c677193-a5ee-4fe0-ba82-95ad78a8edf6"
+  },
+  "responseCode": "OK",
+  "result": "The given id must not be null"
+}
+```
+
+---
+
+### **GET**  
+**URL:** `http://localhost:8080/v1/dataset/666`  
+
+**Response:**
+```json
+{
+  "id": "api.datasets.get",
+  "ver": "v1",
+  "ts": "2025-04-09T11:23:00.540652",
+  "params": {
+    "msgid": "ef64f976-9142-41b1-ac70-97983aeaecba",
+    "resmsgid": "08d08e59-0b5b-4b52-b1ec-6d100b1c3ae4",
     "status": "SUCCESS"
-},
-"responseCode": "OK",
-"result": {
-    "id": "5199909c-19c1-485d-bfee-eb349d3d9cbc",
-    "datasetId": "111",
-    "type": "jujust patching test",
-    "name": "ss",
+  },
+  "responseCode": "OK",
+  "result": {
+    "id": "ef64f976-9142-41b1-ac70-97983aeaecba",
+    "datasetId": "666",
+    "type": "dsfdsffsaf",
+    "name": "observations-transformed",
     "status": "Live",
     "tags": [
+      "tag1",
+      "tag2"
+    ]
+  }
+}
+```
+
+**If dataset not found:**
+```json
+{
+  "id": "api.datasets.error",
+  "ver": "v1",
+  "ts": "2025-04-09T11:23:22.985722",
+  "params": {
+    "status": "FAILED",
+    "resmsgid": "e1da0bfe-78b5-456b-a81d-60d22817b924"
+  },
+  "responseCode": "OK",
+  "result": "Dataset with ID 321342 not found"
+}
+```
+
+---
+
+### **GET All**  
+**URL:** `http://localhost:8080/v1/dataset/findall`  
+
+**Response:**
+```json
+{
+  "id": "api.datasets.findall",
+  "ver": "v1",
+  "ts": "2025-04-09T11:23:56.336131",
+  "params": {
+    "status": "SUCCESS",
+    "resmsgid": "6965de88-7272-433a-8bc0-d4cb5669af51"
+  },
+  "responseCode": "OK",
+  "result": [
+    {
+      "id": "c72410d0-5546-47ba-97b8-b078567e9a2a",
+      "datasetId": "101",
+      "type": "dataset",
+      "name": "observations-transformed",
+      "status": "Live",
+      "tags": [
         "tag1",
         "tag2"
-    ],
-    "dataVersion": 3,
-    "createdBy": "SYSTEM",
-    "updatedBy": "SYSTEM",
-
-    truncated the reponse 
-}}
-```
-
-### patching non existing data manuplation 
-http://localhost:8080/v1/dataset/9999
-```JSON
-{
-   "type": "jujust patching test",
-   "name": "ss"
-}
-```
- response 
- ``` JSON
-
- {
-    "id_path": "api.datasets.error",
-    "ver": "v2",
-    "ts": "2025-04-07T11:55:11.539493+05:30[Asia/Kolkata]",
-    "params": {
-        "status": "FAILED"
-    },
-    "responseCode": "INTERNAL_SERVER_ERROR",
-    "result": "Dataset with ID 9999 not found"
-}
-
- ```
-
-
- ### Deleting 
- http://localhost:8080/v1/dataset/333
-
- response 
- ```JSON
- {
-    "id_path": "api.datasets.delete",
-    "ver": "v2",
-    "ts": "2025-04-07T11:56:30.320526+05:30[Asia/Kolkata]",
-    "params": {
-        "status": "SUCCESS"
-    },
-    "responseCode": "OK",
-    "result": "Dataset deleted successfully."
-}
-
- ```
-
- ### If no data is present 
-
- ``` JSON 
-
-{
-    "id_path": "api.datasets.error",
-    "ver": "v2",
-    "ts": "2025-04-07T11:57:46.114912+05:30[Asia/Kolkata]",
-    "params": {
-        "status": "FAILED"
-    },
-    "responseCode": "INTERNAL_SERVER_ERROR",
-    "result": "Dataset with ID 333 not found for deletion"
-}
- ```
-
-
- ### Get request
-
- http://localhost:8080/v1/dataset/111
-
-
- Response 
-
- ``` JSON 
-
-{
-    "id_path": "api.datasets.get",
-    "ver": "v2",
-    "ts": "2025-04-07T11:58:30.676357+05:30[Asia/Kolkata]",
-    "params": {
-        "status": "SUCCESS"
-    },
-    "responseCode": "OK",
-    "result": {
-        "id": "5199909c-19c1-485d-bfee-eb349d3d9cbc",
-        "datasetId": "111",
-        "type": "jujust patching test",
-        "name": "ss",
-        "status": "Live",
-        "tags": [
-            "tag1",
-            "tag2"
-        ],
-        "dataVersion": 3,
-        "createdBy": "SYSTEM",
-        "updatedBy": "SYSTEM",
-        "createdDate": "2025-04-07T11:17:24.726909",
-        "updatedDate": "2025-04-07",
-        "publishedDate": "2025-04-07T11:17:24.726957",
-        "validationConfig": {
-            "mode": "Strict",
-            "validate": true,
-            "validation_mode": "Strict"
-        },
-        "extractionConfig": {
-            "batchId": "id",
-            "dedup_config": {
-                "dedup_key": "id",
-                "dedup_period": 720,
-                "drop_duplicates": true
-            },
-            "extraction_key": "events",
-            "is_batch_event": true
-        },
-        "dedupConfig": null,
-        "dataSchema": {
-            "type": "object",
-            "title": "Canonical Observations",
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "required": [
-                "id",
-                "parentCollectionRef",
-                "integrationAccountRef",
-                "obsCode",
-                "phenTime",
-                "value"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "xMax": {
-                    "type": "number"
-                },
-                "xMin": {
-                    "type": "number"
-                },
-                "yMax": {
-                    "type": "number"
-                },
-                "yMin": {
-                    "type": "number"
-                },
-                "value": {
-                    "type": "string"
-                },
-                "obsCode": {
-                    "type": "string"
-                },
-                "assetRef": {
-                    "type": "string"
-                },
-                "modified": {
-                    "type": "number"
-                },
-                "phenTime": {
-                    "type": "string",
-                    "format": "date-time",
-                    "suggestions": [
-                        {
-                            "advice": "The System can index all data on this column",
-                            "message": "The Property 'phenTime' appears to be 'date-time' format type.",
-                            "severity": "LOW",
-                            "resolutionType": "INDEX"
-                        }
-                    ]
-                },
-                "valueUoM": {
-                    "type": "string"
-                },
-                "phenEndTime": {
-                    "type": "string",
-                    "format": "date-time",
-                    "suggestions": [
-                        {
-                            "advice": "The System can index all data on this column",
-                            "message": "The Property 'phenEndTime' appears to be 'date-time' format type.",
-                            "severity": "LOW",
-                            "resolutionType": "INDEX"
-                        }
-                    ]
-                },
-                "spatialExtent": {
-                    "type": "string"
-                },
-                "codeComponents": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "value": {
-                                "type": "string"
-                            },
-                            "selector": {
-                                "type": "string"
-                            },
-                            "valueUoM": {
-                                "type": "string"
-                            },
-                            "componentCode": {
-                                "type": "string"
-                            },
-                            "componentType": {
-                                "enum": [
-                                    "AGG_TIME_WINDOW",
-                                    "AGG_METHOD",
-                                    "PARAMETER",
-                                    "FEATURE_OF_INTEREST",
-                                    "OBS_PROPERTY",
-                                    "SAMPLING_STRATEGY",
-                                    "OBS_METHOD",
-                                    "METADATA",
-                                    "METADATA_DEVICE",
-                                    "DATA_QUALITY",
-                                    "EVENT",
-                                    "FOI_CONTEXT"
-                                ],
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "parentCollectionRef": {
-                    "type": "string"
-                },
-                "integrationAccountRef": {
-                    "type": "string"
-                }
-            },
-            "description": "A canonical observation"
-        },
-        "denormConfig": {
-            "denorm_fields": [
-                {
-                    "redis_db": 3,
-                    "denorm_key": "assetRef",
-                    "denorm_out_field": "assetMeta"
-                },
-                {
-                    "redis_db": 4,
-                    "denorm_key": "integrationAccountRef",
-                    "denorm_out_field": "providerMeta"
-                }
-            ],
-            "redis_db_host": "192.168.106.2",
-            "redis_db_port": 6379
-        },
-        "routerConfig": {
-            "topic": "observations-transformed"
-        },
-        "datasetConfig": {
-            "data_key": "",
-            "redis_db": 0,
-            "index_data": true,
-            "entry_topic": "local.ingest",
-            "redis_db_host": "192.168.106.2",
-            "redis_db_port": 6379,
-            "timestamp_key": "phenTime",
-            "exclude_fields": []
-        }
+      ]
     }
+  ]
 }
- ```
-
- If no data found 
-
- ```JSON 
-
- {
-    "id_path": "api.datasets.error",
-    "ver": "v2",
-    "ts": "2025-04-07T11:59:23.465646+05:30[Asia/Kolkata]",
-    "params": {
-        "status": "FAILED"
-    },
-    "responseCode": "INTERNAL_SERVER_ERROR",
-    "result": "Dataset with ID 222 not found"
-}
-
 ```
+
+---
+
+### **PATCH**  
+**URL:** `http://localhost:8080/v1/dataset/444`  
+
+**Request:**
+```json
+{
+  "type": "jujust patching test",
+  "name": "ss"
+}
+```
+
+**Response:**
+```json
+{
+  "id": "api.datasets.update",
+  "ver": "v1",
+  "ts": "2025-04-09T11:24:30.376515",
+  "params": {
+    "msgid": "ee6649b7-b0cd-466b-a794-c82f502bd1c3",
+    "resmsgid": "50e79877-bb34-4eb2-a635-b11a30b4449d",
+    "status": "SUCCESS"
+  },
+  "responseCode": "OK",
+  "result": {
+    "id": "ee6649b7-b0cd-466b-a794-c82f502bd1c3",
+    "datasetId": "444",
+    "type": "jujust patching test",
+    "name": "ss"
+  }
+}
+```
+
+---
+
+### **DELETE**  
+**URL:** `http://localhost:8080/v1/dataset/111`  
+
+**Successful Response:**
+```json
+{
+  "id": "api.datasets.delete",
+  "ver": "v1",
+  "ts": "2025-04-09T11:25:50.836595",
+  "params": {
+    "msgid": "ed982faf-3f34-435f-ad21-751d12486545",
+    "resmsgid": "1f727878-0d40-478d-8b95-99c07d660444",
+    "status": "SUCCESS"
+  },
+  "responseCode": "OK",
+  "result": {
+    "id": "ed982faf-3f34-435f-ad21-751d12486545",
+    "datasetId": "111",
+    "type": "dsfdsffsaf",
+    "dataVersion": 1,
+    "message": "Dataset deleted successfully",
+    "ver": "v1"
+  }
+}
+```
+
+**If dataset not found:**
+```json
+{
+  "id": "api.datasets.error",
+  "ver": "v1",
+  "ts": "2025-04-09T11:26:16.590747",
+  "params": {
+    "status": "FAILED",
+    "resmsgid": "8f3e596e-8e21-4df4-9326-3ce7c29c7d2f"
+  },
+  "responseCode": "OK",
+  "result": "Dataset with ID 111 not found for deletion"
+}
+```
+```
+
+Let me know if you want this in a downloadable `.md` file or if you'd like to add more endpoints or sections!

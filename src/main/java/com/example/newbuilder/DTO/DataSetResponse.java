@@ -35,22 +35,4 @@ public class DataSetResponse {
     // adding according to standaed request and reponse
     private String ver;
 
-    /*
-     * 
-     * {
-  "id": "api.datasets.create",
-  "ver": "v2",
-  "ts": "2024-07-15T18:44:08+05:30",
-  "params": {
-    "status": "SUCCESS",
-    "msgid": "4a7f14c3-d61e-4d4f-be78-181834eeff6d",
-    "resmsgid": "276c042c-0f23-4b26-9b10-6fe48bbc2d3a"
-  },
-  "responseCode": "OK",
-  "result": {
-    "id": "telemetry_record-t4",
-    "version_key": "1721049248930"
-  }
-}
-     */
 }
