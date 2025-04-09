@@ -1,99 +1,186 @@
 
-{
-  "id": "api.datasets.create",
-  "ver": "v2",
-  "ts": "2024-07-15T18:44:08+05:30",
-  "params": {
-    "status": "SUCCESS",
-    "msgid": "4a7f14c3-d61e-4d4f-be78-181834eeff6d",
-    "resmsgid": "276c042c-0f23-4b26-9b10-6fe48bbc2d3a"
-  },
-  "responseCode": "OK",
-  "result": {
-    "id": "telemetry_record-t4",
-    "version_key": "1721049248930"
-  }
-}
 
 
-POST /v2/datasets/create HTTP/1.1
-Host: localhost:3000
-Content-Type: application/json
-Accept: */*
-Content-Length: 1086
+
+#### This is a simple not and the data formate we are using in postman 
+
 
 {
-  "id": "api.datasets.create",
-  "ver": "v2",
-  "ts": "2024-04-10T16:10:50+05:30",
-  "params": {
-    "msgid": "4a7f14c3-d61e-4d4f-be78-181834eeff6d"
-  },
-  "request": {
-    "dataset_id": "telemetry_record-t4",
-    "type": "event",
-    "name": "sb-telemetry",
-    "validation_config": {
-      "validate": true,
-      "mode": "Strict"
+    
+    "datasetId": "111",
+    "type": "dsfdsffsaf",
+    "name": "observations-transformed",
+    "validationConfig": {
+        "validate": true,
+        "mode": "Strict",
+        "validation_mode": "Strict"
     },
-    "extraction_config": {
-      "is_batch_event": true,
-      "extraction_key": "events",
-      "dedup_config": {
+    "extractionConfig": {
+        "is_batch_event": true,
+        "extraction_key": "events",
+        "dedup_config": {
+            "drop_duplicates": true,
+            "dedup_key": "id",
+            "dedup_period": 720
+        },
+        "batchId": "id"
+    },
+    "dedupConfig": {
         "drop_duplicates": true,
-        "dedup_key": "id"
-      }
+        "dedup_key": "id",
+        "dedup_period": 720
     },
-    "dedup_config": {
-      "drop_duplicates": true,
-      "dedup_key": "mid"
-    },
-    "data_schema": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "type": "object",
-      "properties": {
-        "mid": {
-          "type": "string",
-          "arrival_format": "text",
-          "data_type": "string"
+    "dataSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Canonical Observations",
+        "description": "A canonical observation",
+        "type": "object",
+        "properties": {
+            "obsCode": {
+                "type": "string"
+            },
+            "codeComponents": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "componentCode": {
+                            "type": "string"
+                        },
+                        "componentType": {
+                            "type": "string",
+                            "enum": [
+                                "AGG_TIME_WINDOW",
+                                "AGG_METHOD",
+                                "PARAMETER",
+                                "FEATURE_OF_INTEREST",
+                                "OBS_PROPERTY",
+                                "SAMPLING_STRATEGY",
+                                "OBS_METHOD",
+                                "METADATA",
+                                "METADATA_DEVICE",
+                                "DATA_QUALITY",
+                                "EVENT",
+                                "FOI_CONTEXT"
+                            ]
+                        },
+                        "selector": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "string"
+                        },
+                        "valueUoM": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "valueUoM": {
+                "type": "string"
+            },
+            "value": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "parentCollectionRef": {
+                "type": "string"
+            },
+            "integrationAccountRef": {
+                "type": "string"
+            },
+            "assetRef": {
+                "type": "string"
+            },
+            "xMin": {
+                "type": "number"
+            },
+            "xMax": {
+                "type": "number"
+            },
+            "yMin": {
+                "type": "number"
+            },
+            "yMax": {
+                "type": "number"
+            },
+            "phenTime": {
+                "type": "string",
+                "format": "date-time",
+                "suggestions": [
+                    {
+                        "message": "The Property 'phenTime' appears to be 'date-time' format type.",
+                        "advice": "The System can index all data on this column",
+                        "resolutionType": "INDEX",
+                        "severity": "LOW"
+                    }
+                ]
+            },
+            "phenEndTime": {
+                "type": "string",
+                "format": "date-time",
+                "suggestions": [
+                    {
+                        "message": "The Property 'phenEndTime' appears to be 'date-time' format type.",
+                        "advice": "The System can index all data on this column",
+                        "resolutionType": "INDEX",
+                        "severity": "LOW"
+                    }
+                ]
+            },
+            "spatialExtent": {
+                "type": "string"
+            },
+            "modified": {
+                "type": "number"
+            }
         },
-        "ets": {
-          "type": "integer",
-          "arrival_format": "number",
-          "data_type": "epoch"
-        },
-        "eid": {
-          "type": "string",
-          "arrival_format": "text",
-          "data_type": "string"
-        }
-      },
-      "additionalProperties": true
+        "required": [
+            "id",
+            "parentCollectionRef",
+            "integrationAccountRef",
+            "obsCode",
+            "phenTime",
+            "value"
+        ]
     },
-    "denorm_config": {
-      "denorm_fields": [
-        {
-          "denorm_key": "eid",
-          "denorm_out_field": "userdata",
-          "dataset_id": "master-telemetry"
-        }
-      ]
+    "denormConfig": {
+        "redis_db_host": "192.168.106.2",
+        "redis_db_port": 6379,
+        "denorm_fields": [
+            {
+                "denorm_key": "assetRef",
+                "redis_db": 3,
+                "denorm_out_field": "assetMeta"
+            },
+            {
+                "denorm_key": "integrationAccountRef",
+                "redis_db": 4,
+                "denorm_out_field": "providerMeta"
+            }
+        ]
     },
-    "transformations_config": [
-      {
-        "field_key": "email",
-        "transformation_function": {
-          "type": "mask",
-          "expr": "mid",
-          "datatype": "string",
-          "category": "pii"
-        },
-        "mode": "Strict"
-      }
-    ],
+    "routerConfig": {
+        "topic": "observations-transformed"
+    },
+    "datasetConfig": {
+        "data_key": "",
+        "timestamp_key": "phenTime",
+        "exclude_fields": [],
+        "entry_topic": "local.ingest",
+        "redis_db_host": "192.168.106.2",
+        "redis_db_port": 6379,
+        "index_data": true,
+        "redis_db": 0
+    },
     "tags": [
-      "tag1"
-    ]
-  }
-}
+        "tag1",
+        "tag2"
+    ],
+    "dataVersion": 1,
+    "status": "Live",
+    "createdBy": "SYSTEM",
+    "updatedBy": "SYSTEM"
+    }
